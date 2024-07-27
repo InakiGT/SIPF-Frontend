@@ -37,16 +37,25 @@ function SideMenu({ setShowMenu, showMenu }) {
                         <ul class={ styles.subMenu }>
                             <li onClick={() => redirect('/inventory')}>Inventario de productos</li>
                             <li onClick={() => redirect('/products')}>Productos</li>
-                            <li onClick={() => redirect('/inventory-tweaks')}>Ajustes de inventario</li>
+                            <li onClick={() => redirect('/new-inventory-entrance')}>Nueva entrada de inventario</li>
                         </ul>
                     </li>
                     <li>
                         <label htmlFor="menu-suppliers"> <img src='https://cdn-icons-png.flaticon.com/512/7570/7570228.png' /> Proveedores</label>
                         <input id="menu-suppliers" type='checkbox' />
                         <ul class={ styles.subMenu }>
-                            <li onClick={() => redirect('/inventory')}>Proveedores</li>
-                            <li onClick={() => redirect('/products')}>Tipo de proveedor</li>
-                            <li onClick={() => redirect('/inventory-tweaks')}>Términos de pago</li>
+                            <li onClick={() => redirect('/suppliers')}>Proveedores</li>
+                            <li onClick={() => redirect('/supplier-types')}>Tipo de proveedor</li>
+                            <li onClick={() => redirect('/payment-terms')}>Términos de pago</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <label htmlFor="menu-products"> <img src='https://cdn-icons-png.flaticon.com/512/1311/1311095.png' /> Productos</label>
+                        <input id="menu-products" type='checkbox' />
+                        <ul class={ styles.subMenu }>
+                            <li onClick={() => redirect('/products')}>Productos</li>
+                            <li onClick={() => redirect('/brands')}>Marcas</li>
+                            <li onClick={() => redirect('/categories')}>Categorías</li>
                         </ul>
                     </li>
                 </ul>

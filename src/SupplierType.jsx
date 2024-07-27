@@ -7,12 +7,12 @@ import Loader from './components/Loader';
 import CreateItemDialog from './components/CreateItemDialog';
 import createItem from './helpers/createItem';
 
-function Brand() {
+function SupplierType() {
     createEffect(() => {
         checkLogin();
     });
 
-    const api = new Api('http://localhost:5024/api/Producto');
+    const api = new Api('http://localhost:5024/api/Proveedor');
 
     const [ searchParams ] = useSearchParams();
 
@@ -20,16 +20,16 @@ function Brand() {
     const [ category, setCategory ] = createSignal(null);
 
     createEffect(async () => {
-        const data = await api.Get(`/ObtenerMarcaPorId/${ searchParams.id }`);
+        const data = await api.Get(`/ObtenerTipoProveedorPorId/${ searchParams.id }`);
         setCategory(data.data);
     });
 
     const [ response, setResponse ] = createSignal(null);
 
     const updateCategory = async () => {
-        const api = new Api(`http://localhost:5024/api/Producto/ActualizarMarca/${category()?.id}`);
+        const api = new Api(`http://localhost:5024/api/Producto/ActualizarCategoria/${category()?.id}`);
         const res = await createItem(api, category, 'Put');
-
+        console.log(category())
         setResponse(res);
     }
 
@@ -38,12 +38,12 @@ function Brand() {
             <CreateItemDialog
                 setResponse={ setResponse }
                 response={ response }
-                route={ 'brands' }
-                type={ 'Marca' }
+                route={ 'supplier-types' }
+                type={ 'Tipo de proveedor' }
             />
 
 
-            <p>Marca / { category()?.id }</p>
+            <p>Tipo de proveedor / { category()?.id }</p>
             
             <Show when={ category() } fallback={ <Loader /> }>
             <p>Información general</p>
@@ -69,11 +69,11 @@ function Brand() {
             <div class={ styles.simpleCard }>
                 <div class={ styles.editProductContainer }>
                     <div>
-                        <label>Nombre de la marca</label>
+                        <label>Nombre del tipo de proveedor</label>
                         <input
                             type='text'
                             value={ category().nombre }
-                            placeholder='Categoría'
+                            placeholder='Tipo de proveedor'
                             onInput={(e) => setCategory({ ...category(), nombre: e.target.value })} 
                             disabled={ edit() }
                         />
@@ -89,4 +89,4 @@ function Brand() {
     );
 }
 
-export default Brand;
+export default SupplierType;

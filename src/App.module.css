@@ -329,7 +329,7 @@ body {
   background-color: var(--light);
   z-index: 200;
   box-shadow: 3px 0 5px -2px rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
+  overflow-y: scroll;
 
   ul {
     list-style: none;
@@ -1397,7 +1397,7 @@ body {
 }
 
 .tweakTitles p {
-  width: 18%;
+  width: 19%;
   color: var(--lightdark);
   font-weight: bold;
 }

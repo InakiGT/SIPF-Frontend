@@ -1,97 +1,211 @@
 import { createEffect, createSignal } from 'solid-js';
 import styles from './App.module.css';
 import checkLogin from './helpers/checkLogin';
+import Api from './helpers/api';
+import { useSearchParams } from '@solidjs/router';
+import createItem from './helpers/createItem';
+import Loader from './components/Loader';
 
 function Supplier() {
     createEffect(() => {
         checkLogin();
     });
 
+    const api = new Api('http://localhost:5024/api/Proveedor');
+
+    const [ searchParams ] = useSearchParams();
+
     const [ edit, setEdit ] = createSignal(true);
+    const [ img, setImg ] = createSignal('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/1156px-Picture_icon_BLACK.svg.png');
+    const [ product, setProduct ] = createSignal(null);
+    const [ response, setResponse ] = createSignal(null);
+
+    createEffect(async () => {
+        const data = await api.Get(`/ObtenerProveedorPorId/${ searchParams.id }`);
+        setProduct(data.data);
+        console.log(product())
+    });
+
+    const updateProduct = async () => {
+        const api = new Api(`/ActualizarProducto/${product()?.id}`);
+        const res = await createItem(api, product, 'Put');
+
+        setResponse(res);
+    }
     
     return (
         <div class={ styles.buyMainCard }>
-            <p>Proveedor / POV0001</p>
+            <p>Proveedor / {product()?.id}</p>
 
+            <Show when={ product() } fallback={ <Loader /> }>
             <p>Información general</p>
             <div class={ styles.simpleCard }>
                 <div class={ styles.orderFolio }>
-                    <img src='https://png.pngtree.com/png-clipart/20230504/original/pngtree-supplier-line-icon-png-image_9138990.png' />
-                    <p>POV0001</p>
+                    <img src='https://cdn-icons-png.flaticon.com/512/1380/1380641.png' />
+                    <p>{ product().id }</p>
                 </div>
 
                 <div class={ styles.orderDescription }>
                     <div>
                         <p>ID</p>
-                        <p>POV0001</p>
+                        <p>{ product().id }</p>
                     </div>
                     <div>
-                        <p>RFC</p>
-                        <p>UNRFC001</p>
+                        <p>Nombre</p>
+                        <p>{ product().nombre }</p>
                     </div>
                     <div>
-                        <p>Teléfono</p>
-                        <p>5510121012</p>
+                        <p>Dirección</p>
+                        <p>{ `${product().calle}, ${ product().numeroExt }, ${ product().colonia }, ${ product().localidad}, ${ product().estado } ` }</p>
                     </div>
                     <div>
-                        <p>Móvil</p>
-                        <p>5510121012</p>
+                        <p>Teléfonos</p>
+                        <p>{ product().telefono }, { product().telefonoExt }</p>
                     </div>
                     <div>
                         <p>Email</p>
-                        <p>proveedor@correo.com</p>
+                        <p>{ product().email }</p>
+                    </div>
+                    <div>
+                        <p>Celular</p>
+                        <p>{ product().movil }</p>
+                    </div>
+                    <div>
+                        <p>Puesto</p>
+                        <p>{ product().puesto }</p>
                     </div>
                     <div>
                         <p>Término de pago</p>
-                        <p>7 días</p>
+                        <p>{ product().terminoPago }</p>
+                    </div>
+                    <div>
+                        <p>Tipo de proveedor</p>
+                        <p>{ product().tipoProveedor }</p>
+                    </div>
+                    <div>
+                        <p>Tipo de factura</p>
+                        <p>{ product().tipoFactura }</p>
+                    </div>
+                    <div>
+                        <p>Importe máximo de crédito</p>
+                        <p>{ product().importeMaxCredito }</p>
+                    </div>
+                    <div>
+                        <p>Comentarios</p>
+                        <p>{ product().comentarios }</p>
                     </div>
                 </div>
             </div>
 
-            <p>Detalles</p>
+            {/* <p>Detalles</p>
             <div class={ styles.simpleCard }>
                 <div class={ styles.editProductContainer }>
                     <div>
-                        <label>ID</label>
-                        <input type='text' placeholder='POV0001' disabled={ edit() } />
+                        <label>SKU</label>
+                        <input
+                            type='text'
+                            placeholder='SO7001' 
+                            disabled={ edit() } 
+                            value={ product().sku }
+                            />
                     </div>
                     <div>
-                        <label>RFC</label>
-                        <input type='text' placeholder='UNRFC001' disabled={ edit() } />
+                        <label>Modelo</label>
+                        <input 
+                            type='text' 
+                            placeholder='100mg' 
+                            disabled={ edit() } 
+                            value={ product().modelo }
+                        />
                     </div>
                     <div>
-                        <label>Teléfono</label>
-                        <input type='text' placeholder='5500110011' disabled={ edit() } />
+                        <label>Código de barras</label>
+                        <input
+                            type='text' 
+                            placeholder='123 921 319 203' 
+                            disabled={ edit() } 
+                            value={ product().codigoBarra }
+                        />
                     </div>
                     <div>
-                        <label>Móvil</label>
-                        <input type='text' placeholder='5500110011' disabled={ edit() } />
+                        <label>Tipo de producto</label>
+                        <input 
+                            type='text' 
+                            placeholder='Medicamento' 
+                            disabled={ edit() } 
+                            value={ product().tipoProducto }
+                        />
                     </div>
                     <div>
-                        <label>Email</label>
-                        <input type='number' placeholder='proveedor@correo.com' disabled={ edit() } />
+                        <label>Costo</label>
+                        <input
+                            type='number'
+                            placeholder='$10.00' 
+                            disabled={ edit() } 
+                            value={ product().costo }
+                        />
                     </div>
                     <div>
-                        <label>Término de pago</label>
-                        <input type='number' placeholder='7 días' disabled={ edit() } />
+                        <label>Precio de venta</label>
+                        <input 
+                            type='number' 
+                            placeholder='$100.00' 
+                            disabled={ edit() } 
+                            value={ product().precioVenta }
+                        />
                     </div>
                     <div>
-                        <label>Importe máximo de crédito</label>
-                        <input type='number' placeholder='$4000.00' disabled={ edit() } />
+                        <label>Nombre del producto</label>
+                        <input 
+                            type='text' 
+                            placeholder='Vicodin' 
+                            disabled={ edit() } 
+                            value={ product().nombre }
+                        />
                     </div>
                     <div>
-                        <label>Es compañía</label>
-                        <select class={ styles.mainSelect }>
-                            <option>Sí</option>
-                            <option>No</option>
-                        </select>
+                        <label>Código SAT</label>
+                        <input 
+                            type='text' 
+                            placeholder='111111' 
+                            disabled={ edit() } 
+                            value={ product().codigoSAT }
+                        />
+                    </div>
+                    <div>
+                        <label>Denominación generica</label>
+                        <input 
+                            type='text' 
+                            placeholder='Vicodin' 
+                            disabled={ edit() } 
+                            value={ product().denominacionGenerica }
+                        />
+                    </div>
+                    <div>
+                        <label>Nombre de ingrediente activo</label>
+                        <input 
+                            type='text' 
+                            placeholder='Azúcar' 
+                            disabled={ edit() } 
+                            value={ product().nombreIngredienteActivo }
+                        />
+                    </div>
+                    <div>
+                        <label>Tipo de coste</label>
+                        <input 
+                            type='text' 
+                            placeholder='Coste' 
+                            disabled={ edit() } 
+                            value={ product().tipoCoste }
+                        />
                     </div>
                 </div>
                 <div class={ styles.editProductButtons }>
                     <button class={ styles.secondaryButton } onClick={() => setEdit(false)}>Editar</button>
-                    <button class={ styles.mainButton }>Guardar</button>
+                    <button class={ styles.mainButton } onClick={ updateProduct }>Guardar</button>
                 </div>
-            </div>
+            </div> */}
+            </Show>
         </div>
     );
 }

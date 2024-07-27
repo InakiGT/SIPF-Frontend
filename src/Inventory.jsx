@@ -3,6 +3,7 @@ import styles from './App.module.css';
 import checkLogin from './helpers/checkLogin';
 import Api from './helpers/api';
 import Loader from './components/Loader';
+import searchItem from './helpers/searchItem';
 import { useNavigate } from '@solidjs/router';
 
 function Inventory() {
@@ -59,15 +60,16 @@ function Inventory() {
 
                 <div class={ styles.inventoryFilters }>
                     <p>Buscar: </p>
-                    <input type='text' placeholder='Buscar' />
+                    <input type='text' placeholder='Buscar' onInput={(e) => searchItem(e, inventory(), setPosition, setCurrentProducts, [ 'folioSalida', 'folioEntrada', 'folioAjuste', 'producto' ])} />
                 </div>
 
                 <div class={ styles.productsList }>
                 <Show when={ currentProducts() } fallback={ <Loader /> }>
                     <div class={ styles.productsTitles }>
                         <p></p>
-                        <p>ID</p>
-                        <p>Producto ID</p>
+                        <p>Folio entrada</p>
+                        <p>Folio salida</p>
+                        <p>Folio ajuste</p>
                         <p>Nombre del Producto</p>
                         <p>Categoria</p>
                         <p>Precio Unitario</p>
@@ -85,8 +87,9 @@ function Inventory() {
                                     <div>
                                     <img src='https://cdn4.iconfinder.com/data/icons/banking-finance/32/shelf-menu-512.png' />
                                     </div>
-                                    <p>{ product.id }</p>
-                                    <p>{ product.productoId }</p>
+                                    <p>{ product.folioEntrada }</p>
+                                    <p>{ product.folioSalida }</p>
+                                    <p>{ product.folioAjuste }</p>
                                     <p>{ product.producto }</p>
                                     <p>{ product.categoria }</p>
                                     <p>${ product.precioUnitario }</p>
@@ -119,7 +122,7 @@ function Inventory() {
                 >Siguiente</button>
                 <button 
                     class={ styles.secondaryButton }
-                    onClick={() => setPosition(Math.round(products().length / 4 - 1))}
+                    onClick={() => setPosition(Math.round(inventory().length / 4 - 1))}
                 >Último</button>
             </div>
         </div>

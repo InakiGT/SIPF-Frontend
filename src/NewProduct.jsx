@@ -43,26 +43,58 @@ function NewProduct() {
     const [ productTypes, setProductTypes ] = createSignal([]);
     const [ shapes, setShapes ] = createSignal([]);
     const [ departments, setDepartments ] = createSignal([]);
+    const [ units, setUnits ] = createSignal([]);
     const [ response, setResponse ] = createSignal(null);
 
     createEffect(async () => {
         let response = await api.Get('Producto/ObtenerMarcas');
         setBrands(response.data);
+        setProduct({
+            ...product(),
+            MarcaId: response.data[0].id
+        })
 
         response = await api.Get('Producto/ObtenerCategoria');
         setCategories(response.data);
+        setProduct({
+            ...product(),
+            CategoriaId: response.data[0].id
+        })
 
         response = await api.Get('Proveedor/ObtenerProveedor');
         setSuppliers(response.data);
+        setProduct({
+            ...product(),
+            ProveedorId: response.data[0].id
+        })
 
         response = await api.Get('Producto/ObtenerTipoProducto');
         setProductTypes(response.data);
+        setProduct({
+            ...product(),
+            TipoProductoId: response.data[0].id
+        })
 
         response = await api.Get('Producto/ObtenerFormaFarmaceutica');
         setShapes(response.data);
+        setProduct({
+            ...product(),
+            FormaFarmaceuticaId: response.data[0].id
+        })
 
         response = await api.Get('Producto/ObtenerDepartamento');
         setDepartments(response.data);
+        setProduct({
+            ...product(),
+            DepartamentoId: response.data[0].id
+        })
+
+        response = await api.Get('Producto/ObtenerUnidadMedida');
+        setUnits(response.data);
+        setProduct({
+            ...product(),
+            UnidadMedidaId: response.data[0].id
+        })
     });
 
     const createProduct = async () => {
@@ -205,11 +237,17 @@ function NewProduct() {
                     </div>
                     <div>
                         <label>Unidad de medida</label>
-                        <input 
-                            type='number' 
-                            placeholder='Vicodin' 
-                            onInput={(e) => setProduct({ ...product(), UnidadMedidaId: e.target.value })} 
-                        />
+                        <select onInput={ e => setProduct({ ...product(), UnidadMedidaId: e.target.value }) } class={ styles.mainSelect }>
+                            <Show when={ units() } fallback={ <option>No hay unidades</option> }>
+                                <For each={ units() } fallback={ <option>No hay unidades</option> }>
+                                    {
+                                        (unit) => (
+                                            <option value={ unit.id }>{ unit.unidad }</option>
+                                        )
+                                    }
+                                </For>
+                            </Show>
+                        </select>
                     </div>
                     <div>
                         <label>Tasa de impuesto</label>

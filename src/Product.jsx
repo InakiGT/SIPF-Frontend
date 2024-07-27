@@ -4,6 +4,8 @@ import Loader from './components/Loader';
 import Api from './helpers/api';
 import { useSearchParams } from '@solidjs/router';
 import checkLogin from './helpers/checkLogin';
+import CreateItemDialog from './components/CreateItemDialog';
+import createItem from './helpers/createItem';
 
 function Product() {
     createEffect(() => {
@@ -17,6 +19,7 @@ function Product() {
     const [ edit, setEdit ] = createSignal(true);
     const [ img, setImg ] = createSignal('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Picture_icon_BLACK.svg/1156px-Picture_icon_BLACK.svg.png');
     const [ product, setProduct ] = createSignal(null);
+    const [ response, setResponse ] = createSignal(null);
 
     createEffect(async () => {
         const data = await api.Get(`/ObtenerProductoPorId/${ searchParams.id }`);
@@ -24,8 +27,21 @@ function Product() {
         console.log(product())
     });
 
+    const updateProduct = async () => {
+        const api = new Api(`/ActualizarProducto/${product()?.id}`);
+        const res = await createItem(api, product, 'Put');
+
+        setResponse(res);
+    }
+
     return (
         <div class={ styles.buyMainCard }>
+            <CreateItemDialog
+                setResponse={ setResponse }
+                response={ response }
+                route={ 'products' }
+                type={ 'Producto' }
+            />
             <p>Productos / { product()?.sku }</p>
 
             <Show when={ product() } fallback={ <Loader /> }>
@@ -177,7 +193,7 @@ function Product() {
                 </div>
                 <div class={ styles.editProductButtons }>
                     <button class={ styles.secondaryButton } onClick={() => setEdit(false)}>Editar</button>
-                    <button class={ styles.mainButton }>Guardar</button>
+                    <button class={ styles.mainButton } onClick={ updateProduct }>Guardar</button>
                 </div>
             </div>
 

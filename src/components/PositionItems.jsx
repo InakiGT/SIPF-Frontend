@@ -27,7 +27,7 @@ function PositionItems({ items, position, setPosition }) {
         >Siguiente</button>
         <button 
             class={ styles.secondaryButton }
-            onClick={() => setPosition(Math.round(brands().length / 4 - 1))}
+            onClick={() => setPosition(Math.round(items().length / 4 - 1))}
         >Último</button>
     </div>
     );

@@ -35,6 +35,10 @@ import SupplierTypes from './SupplierTypes';
 import NewCategory from './NewCategory';
 import InventoryItem from './InventoryItem';
 import NewEntrance from './NewEntrance';
+import PaymentTerms from './PaymentTerms';
+import PaymentTerm from './PaymentTerm';
+import NewPaymentTerm from './NewPaymentTerm';
+import SupplierType from './SupplierType';
 
 
 const root = document.getElementById('root');
@@ -85,6 +89,10 @@ render(() => (
     <Route path='/suppliers' component={ Suppliers } />
     <Route path='/supplier' component={ Supplier } />
     <Route path='/supplier-types' component={ SupplierTypes } />
+    <Route path='/supplier-type' component={ SupplierType } />
+    <Route path='/payment-terms' component={ PaymentTerms } />
+    <Route path='/payment-term' component={ PaymentTerm } />
+    <Route path='/new-payment-term' component={ NewPaymentTerm } />
     <Route path='/new-supplier' component={ NewSupplier } />
     <Route path='/brands' component={ Brands } />
     <Route path='/brand' component={ Brand } />

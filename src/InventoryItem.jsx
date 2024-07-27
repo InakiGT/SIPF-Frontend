@@ -5,7 +5,6 @@ import Api from './helpers/api';
 import { useSearchParams } from '@solidjs/router';
 import checkLogin from './helpers/checkLogin';
 
-// TODO: Crear 
 function InventoryItem() {
     createEffect(() => {
         checkLogin();
@@ -52,7 +51,7 @@ function InventoryItem() {
                     </div>
                     <div>
                         <p>Nombre del producto</p>
-                        <p>{ product().nombre }</p>
+                        <p>{ product().producto }</p>
                     </div>
                     <div>
                         <p>Precio Unitario</p>
@@ -77,6 +76,18 @@ function InventoryItem() {
                     <div>
                         <p>Stock mínimo</p>
                         <p>{ product().stockMinimo }</p>
+                    </div>
+                    <div>
+                        <p>Folio Entrada</p>
+                        <p>{ product().folioEntrada }</p>
+                    </div>
+                    <div>
+                        <p>Folio Salida</p>
+                        <p>{ product().folioSalida }</p>
+                    </div>
+                    <div>
+                        <p>Folio Ajuste</p>
+                        <p>{ product().folioAjuste }</p>
                     </div>
                 </div>
             </div>

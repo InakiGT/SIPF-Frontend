@@ -106,7 +106,7 @@ function Categories() {
                 >Siguiente</button>
                 <button 
                     class={ styles.secondaryButton }
-                    onClick={() => setPosition(Math.round(products().length / 4 - 1))}
+                    onClick={() => setPosition(Math.round(categories().length / 4 - 1))}
                 >Último</button>
             </div>
         </div>
