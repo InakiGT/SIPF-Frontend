@@ -44,6 +44,7 @@ function NewProduct() {
     const [ shapes, setShapes ] = createSignal([]);
     const [ departments, setDepartments ] = createSignal([]);
     const [ units, setUnits ] = createSignal([]);
+    const [ taxes, setTaxes ] = createSignal([]);
     const [ response, setResponse ] = createSignal(null);
 
     createEffect(async () => {
@@ -94,7 +95,14 @@ function NewProduct() {
         setProduct({
             ...product(),
             UnidadMedidaId: response.data[0].id
-        })
+        });
+
+        response = await api.Get('Producto/ObtenerTasaImpuesto');
+        setTaxes(response.data);
+        setProduct({
+            ...product(),
+            TasaImpuestoId: response.data[0].id
+        });
     });
 
     const createProduct = async () => {
@@ -251,11 +259,17 @@ function NewProduct() {
                     </div>
                     <div>
                         <label>Tasa de impuesto</label>
-                        <input 
-                            type='number' 
-                            placeholder='Vicodin' 
-                            onInput={(e) => setProduct({ ...product(), TasaImpuestoId: e.target.value })} 
-                        />
+                        <select onInput={ e => setProduct({ ...product(), TasaImpuestoId: e.target.value }) } class={ styles.mainSelect }>
+                            <Show when={ taxes() } fallback={ <option>No hay tasas de impuestos</option> }>
+                                <For each={ taxes() } fallback={ <option>No hay tasas de impuestos</option> }>
+                                    {
+                                        (tax) => (
+                                            <option value={ tax.id }>{ tax.valor }</option>
+                                        )
+                                    }
+                                </For>
+                            </Show>
+                        </select>
                     </div>
                     <div>
                         <label>Código SAT</label>

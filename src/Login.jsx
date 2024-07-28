@@ -9,8 +9,9 @@ function Login() {
   const navigate = useNavigate();
 
   const [ credentials, setCredentials ] = createSignal({
-    email: '',
-    password: '',
+    Email: '',
+    EmailNormalizado: '',
+    Password: '',
   });
 
   const [ error, setError ] = createSignal(null);
@@ -29,7 +30,7 @@ function Login() {
   const login = async (e) => {
     e.preventDefault();
 
-    if (credentials().email.trim() === '' || credentials().password.trim() === '') {
+    if (credentials().Email.trim() === '' || credentials().Password.trim() === '') {
       setError('Los campos no pueden ir vacíos');
 
       setTimeout(() => {
@@ -40,8 +41,9 @@ function Login() {
     }
     
     const response = await api.Post({
-      email: credentials().email,
-      contrasena: credentials().password,
+      Email: credentials().Email,
+      EmailNormalizado: credentials().EmailNormalizado,
+      Contrasena: credentials().Password,
     });
 
     if (response.status !== 200) {
@@ -77,8 +79,8 @@ function Login() {
                 type='email'
                 placeholder='correo@gmail.com'
                 class={ styles.mainInput }
-                value={ credentials().email }
-                onInput={ (e) => setCredentials({ ...credentials(), email: e.target.value }) }
+                value={ credentials().Email }
+                onInput={ (e) => setCredentials({ ...credentials(), Email: e.target.value, EmailNormalizado: e.target.value }) }
                 />
             </div>
             <div class={ styles.loginInput }>
@@ -87,8 +89,8 @@ function Login() {
                 type='password'
                 placeholder='Contraseña'
                 class={ styles.mainInput }
-                value={ credentials().password }
-                onInput={ (e) => setCredentials({ ...credentials(), password: e.target.value }) }
+                value={ credentials().Password }
+                onInput={ (e) => setCredentials({ ...credentials(), Password: e.target.value }) }
               />
             </div>
             <div>

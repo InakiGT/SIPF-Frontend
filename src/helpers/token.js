@@ -7,3 +7,9 @@ export const getToken = () => {
 export const setToken = (token) => {
     localStorage.setItem('jwt', token);
 }
+
+export const getId = () => {
+    const id = localStorage.getItem('user-id');
+
+    return id;
+}

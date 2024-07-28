@@ -12,7 +12,10 @@ const checkLogin = () => {
         
         return;
     }
+
+    
     const decodeToken = decodeJwt(token);
+    localStorage.setItem('user-id', decodeToken.nameid);
     
     const currentTime = Math.floor(Date.now() / 1000);
 

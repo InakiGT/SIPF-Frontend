@@ -6,6 +6,7 @@ import { useNavigate } from '@solidjs/router';
 import createItem from './helpers/createItem';
 import CreateItemDialog from './components/CreateItemDialog';
 import Loader from './components/Loader';
+import { getId } from './helpers/token';
 
 function NewEntrance() {
     createEffect(() => {
@@ -20,7 +21,7 @@ function NewEntrance() {
         ProveedorId: 0,
         CantidadTotal: 0,
         CostoTotal: 0,
-        UsuarioId: 1,
+        UsuarioId: getId(),
         Comentarios: '',
         AutorizoId: 1,
         EstatusId: 1,

@@ -29,6 +29,7 @@ function Product() {
 
     const updateProduct = async () => {
         const api = new Api(`/ActualizarProducto/${product()?.id}`);
+        setProduct({ ...product(), usuarioModifico: 'test' });
         const res = await createItem(api, product, 'Put');
 
         setResponse(res);
