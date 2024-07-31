@@ -39,6 +39,9 @@ import PaymentTerms from './PaymentTerms';
 import PaymentTerm from './PaymentTerm';
 import NewPaymentTerm from './NewPaymentTerm';
 import SupplierType from './SupplierType';
+import Apartments from './Apartments';
+import Apartment from './Apartment';
+import NewApartment from './NewApartment';
 
 
 const root = document.getElementById('root');
@@ -97,6 +100,9 @@ render(() => (
     <Route path='/brands' component={ Brands } />
     <Route path='/brand' component={ Brand } />
     <Route path='/new-brand' component={ NewBrand } />
+    <Route path='/apartments' component={ Apartments } />
+    <Route path='/apartment' component={ Apartment } />
+    <Route path='/new-apartment' component={ NewApartment } />
 
 
     <Route path='/tests' component={ Tests } />

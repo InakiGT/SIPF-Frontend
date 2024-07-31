@@ -64,6 +64,12 @@ function SupplierTypes() {
                         <p></p>
                         <p>ID</p>
                         <p>Nombre del tipo de proveedor</p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
                     </div>
                     <div class={ styles.productsList }>
                     <For each={ currentCategories() }>
@@ -75,6 +81,12 @@ function SupplierTypes() {
                                     </div>
                                     <p>{ category.id }</p>
                                     <p>{ category.nombre }</p>
+                                    <p></p>
+                                    <p></p>
+                                    <p></p>
+                                    <p></p>
+                                    <p></p>
+                                    <p></p>
                                 </div>
                             }
                     </For>

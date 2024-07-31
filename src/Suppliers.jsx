@@ -2,7 +2,7 @@ import { createEffect, createSignal } from 'solid-js';
 import styles from './App.module.css';
 import checkLogin from './helpers/checkLogin';
 import Api from './helpers/api';
-import { useNavigate } from '@solidjs/router';
+import { A, useNavigate } from '@solidjs/router';
 import Loader from './components/Loader';
 
 function Suppliers() {
@@ -44,7 +44,7 @@ function Suppliers() {
             
             <div class={ styles.productsButtons }>
                 <button class={ styles.mainButton }>Personalizar</button>
-                <button class={ styles.mainButton }>Nuevo</button>
+                <button class={ styles.mainButton }><A href='../new-supplier'>Nuevo</A></button>
             </div>
 
             <div class={` ${ styles.simpleCard } ${ styles.productsCard } `}>

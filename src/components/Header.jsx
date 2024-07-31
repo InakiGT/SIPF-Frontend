@@ -2,6 +2,10 @@ import { A } from '@solidjs/router';
 import styles from '../App.module.css';
 
 function Header({ setShowMenu, showMenu }) {
+    const path = window.location.pathname;
+
+    if (path === '/login') return;
+
     return (
         <header class={ styles.header }>
             <div class={ styles.headerInfo } >

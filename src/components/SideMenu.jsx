@@ -1,4 +1,4 @@
-import { A, useNavigate } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
 import styles from '../App.module.css';
 
 function SideMenu({ setShowMenu, showMenu }) {
@@ -56,6 +56,7 @@ function SideMenu({ setShowMenu, showMenu }) {
                             <li onClick={() => redirect('/products')}>Productos</li>
                             <li onClick={() => redirect('/brands')}>Marcas</li>
                             <li onClick={() => redirect('/categories')}>Categorías</li>
+                            <li onClick={() => redirect('/apartments')}>Departamentos</li>
                         </ul>
                     </li>
                 </ul>
